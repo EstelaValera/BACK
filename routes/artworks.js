@@ -1,11 +1,11 @@
 const express = require('express')
-const { getArtworks, getArtworkByCategory, saveArtwork } = require('../controllers/artworkController')
+const { getArtworks, getArtworkByTitle, getArtworkByArtist } = require('../controllers/artworkController')
 
 const router = express.Router()
 
 router.get('/', getArtworks) // obtener obras 
-router.get('/category/:category', getArtworkByCategory) // obtener obras por cateoría 
-router.post('/save', saveArtwork) //guardar obra en la base de datos
+router.get('/title/:title', getArtworkByTitle); // obtener obras por título 
+router.get('/artist/:artist', getArtworkByArtist); // obtener obras por artista 
 
 module.exports = router;
 
