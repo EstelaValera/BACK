@@ -5,9 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 const API_KEY = process.env.HARVARD_API_KEY;  
-
 
 app.use(cors());
 app.use(express.json());
@@ -23,10 +21,7 @@ app.get('/api/artworks/search', async (req, res) => {
         }
 
         const response = await axios.get('https://api.harvardartmuseums.org/object', {
-            // headers: {
-            //     'Authorization': `Bearer ${process.env.HARVARD_API_KEY}`
 
-            // },
             params: {
                 apikey: API_KEY,
                 q: query, 
@@ -49,22 +44,3 @@ app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
 
-
-
-
-// require('dotenv').config();
-
-// const express = require('express')
-// const cors = require('cors')
-
-// const API_KEY = process.env.HARVARD_API_KEY;
-// const app = express()
-// const PORT = process.env.PORT || 3000;
-
-// app.use(cors())
-// app.use(express.json())
-
-// const artworkRoutes = require('./routes/artworks');
-// app.use('/api/artworks', artworkRoutes);
-
-// app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`))
