@@ -10,29 +10,25 @@ const API_KEY = process.env.HARVARD_API_KEY;
 app.use(cors());
 app.use(express.json());
 
-
 app.get('/api/artworks/search', async (req, res) => {
-    console.log('1');
-
+    console.log('Request received:', req.query);
     try {
-        const query = req.query.query; 
-        if (!query) {
-            return res.status(400).json({ message: 'Query parameter is required' });
-        }
+        let params = {
+            apikey: API_KEY,
+            size: 10,
+        };
 
-        const response = await axios.get('https://api.harvardartmuseums.org/object', {
+        if(req.query.query)  params.q = req.query.query; //general
+        if(req.query.person) params.person = req.query.person; //artista
+        if(req.query.title)  params.title = req.query.title; //titulo
+        if(req.query.period) params.period = req.query.period; //periodo
 
-            params: {
-                apikey: API_KEY,
-                q: query, 
-                size: 10   
-            }
-        });
+        const response = await axios.get('https://api.harvardartmuseums.org/object', { params });
 
         if (response.data.records.length > 0) {
             res.json(response.data.records);
         } else {
-            res.status(404).json({ message: 'No artworks found' });
+            res.status(404).json({ message: 'No artworks with descriptions found' });
         }
     } catch (error) {
 
