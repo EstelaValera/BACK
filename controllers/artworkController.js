@@ -12,10 +12,12 @@ const axiosInstance = axios.create({
 
 const searchArtworks = async (req, res) => {
     try {
-        const query = req.query.query;  
+        const query = req.query.query || '';
+        const type = req.query.type || 'painting'; // Tipo de arte por defecto
         const { data } = await axiosInstance.get('/object', {
             params: {
                 q: query,    
+                type: type,  
                 size: 10,   
                 page: req.query.page || 1  
             }
@@ -57,13 +59,17 @@ const searchArtworksByType = async (req, res) => {
 const searchArtworksWithFilters = async (req, res) => {
     try {
         const { query, artist, title, classification, century } = req.query;
+        
+        const filters = {};
+        if (query) filters.q = query;
+        if (artist) filters.artist = artist;
+        if (title) filters.title = title;
+        if (classification) filters.classification = classification;
+        if (century) filters.century = century;
+
         const { data } = await axiosInstance.get('/object', {
             params: {
-                q: query,
-                artist: artist,
-                title: title,
-                classification: classification,
-                century: century,
+                ...filters,
                 size: 10,  
                 page: req.query.page || 1
             }
@@ -78,5 +84,7 @@ const searchArtworksWithFilters = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
 module.exports = { searchArtworks, searchArtworksByType,searchArtworksWithFilters };
 
