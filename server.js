@@ -15,7 +15,7 @@ app.get('/api/artworks/search', async (req, res) => {
     try {
         let params = {
             apikey: API_KEY,
-            size: 15,
+            size: 26,
         };
 
         if(req.query.query)  params.q = req.query.query; //general

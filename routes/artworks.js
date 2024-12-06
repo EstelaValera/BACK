@@ -8,4 +8,3 @@ router.get('/search/type', searchArtworksByType);
 router.get('/search/advanced', searchArtworksWithFilters);
 
 module.exports = router;
-

@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 const searchArtworks = async (req, res) => {
     try {
         const query = req.query.query || '';
-        const type = req.query.type || 'painting'; // Tipo de arte por defecto
+        const type = req.query.type || 'painting'; 
         const { data } = await axiosInstance.get('/object', {
             params: {
                 q: query,    
